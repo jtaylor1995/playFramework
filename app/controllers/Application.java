@@ -39,6 +39,7 @@ public class Application extends Controller {
     }
 
     static Form<Task> taskForm = form(Task.class);
+<<<<<<< HEAD
 
     public static Result login() {
         return ok(
@@ -73,11 +74,25 @@ public class Application extends Controller {
             return null;
         }
     }
+=======
+>>>>>>> a2c4b51... Add Email and password fields.  Next going to add validation to fields
 
     public Result login() {
         return ok(
-                views.html.login.render()
+                views.html.login.render(form(Login.class))
         );
+    }
+
+    public Result authenticate() {
+        Form<Login> loginForm = form(Login.class).bindFromRequest();
+        return ok();
+    }
+
+    public static class Login {
+
+        public String email;
+        public String password;
+
     }
 
 }
