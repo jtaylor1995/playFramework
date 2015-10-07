@@ -7,6 +7,8 @@ import models.*;
 
 import views.html.*;
 
+import static play.data.Form.form;
+
 public class Application extends Controller {
 
     public Result index() {
@@ -36,12 +38,24 @@ public class Application extends Controller {
         return redirect(routes.Application.tasks());
     }
 
-    static Form<Task> taskForm = Form.form(Task.class);
+    static Form<Task> taskForm = form(Task.class);
 
     public Result login() {
         return ok(
-                views.html.login.render()
+                views.html.login.render(form(Login.class))
         );
+    }
+
+    public Result authenticate() {
+        Form<Login> loginForm = form(Login.class).bindFromRequest();
+        return ok();
+    }
+
+    public static class Login {
+
+        public String email;
+        public String password;
+
     }
 
 }
