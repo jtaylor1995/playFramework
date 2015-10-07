@@ -32,7 +32,8 @@ public class Application extends Controller {
     }
 
     public Result deleteTask(Long id) {
-        return TODO;
+        Task.delete(id);
+        return redirect(routes.Application.tasks());
     }
 
     static Form<Task> taskForm = Form.form(Task.class);
