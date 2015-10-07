@@ -38,4 +38,11 @@ public class Application extends Controller {
 
     static Form<Task> taskForm = Form.form(Task.class);
 
+    public Result login() {
+        return ok(
+                views.html.login.render()
+        );
+    }
+
 }
+
