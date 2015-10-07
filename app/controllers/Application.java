@@ -74,5 +74,11 @@ public class Application extends Controller {
         }
     }
 
+    public Result login() {
+        return ok(
+                views.html.login.render()
+        );
+    }
+
 }
 
