@@ -20,8 +20,11 @@ create sequence task_seq;
 
 create sequence user_seq;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b6852a8... Added some login functionality
 
 # --- !Downs
 

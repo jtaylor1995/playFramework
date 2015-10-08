@@ -46,6 +46,7 @@ public class Application extends Controller {
         );
     }
 
+
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
@@ -57,6 +58,7 @@ public class Application extends Controller {
                     routes.Application.index()
             );
         }
+
     }
 
 
@@ -67,9 +69,10 @@ public class Application extends Controller {
 
 
         public String validate() {
-            if (User.authenticate(email, password) == null) {
+            if (Application.authenticateDetails(email, password) == Boolean.FALSE) {
                 return "Invalid user or password";
             }
+            else Application.authenticate();
             return null;
         }
     }
