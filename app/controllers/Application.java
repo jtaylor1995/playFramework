@@ -46,29 +46,19 @@ public class Application extends Controller {
         );
     }
 
-//    public static Result authenticate() {
-//        Form<Login> loginForm = form(Login.class).bindFromRequest();
-//        if (loginForm.hasErrors()) {
-//            return badRequest(views.html.login.render(loginForm));
-//        } else {
-//            session().clear();
-//            session("email", loginForm.get().email);
-//            return redirect(
-//                    routes.Application.index()
-//            );
-//        }
-//    }
-
     public static Result authenticate() {
-        return redirect(routes.Application.index());
+        Form<Login> loginForm = form(Login.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(views.html.login.render(loginForm));
+        } else {
+            session().clear();
+            session("email", loginForm.get().email);
+            return redirect(
+                    routes.Application.index()
+            );
+        }
     }
 
-    public static Boolean authenticateDetails(String email, String password) {
-        if (email.equals("James@Taylor.com") && password.equals("password")) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
-    }
 
     public static class Login {
 
@@ -77,10 +67,9 @@ public class Application extends Controller {
 
 
         public String validate() {
-            if (Application.authenticateDetails(email, password) == Boolean.FALSE) {
+            if (User.authenticate(email, password) == null) {
                 return "Invalid user or password";
             }
-            else Application.authenticate();
             return null;
         }
     }
