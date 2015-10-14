@@ -21,6 +21,8 @@ create sequence task_seq;
 create sequence user_seq;
 
 
+
+
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
