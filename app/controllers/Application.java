@@ -17,7 +17,7 @@ public class Application extends Controller {
 
     public static Result tasks() {
         return ok(
-                views.html.index.render(Task.all(), taskForm)
+                index.render(Task.all(), taskForm)
         );
     }
 
@@ -25,7 +25,7 @@ public class Application extends Controller {
         Form<Task> filledForm = taskForm.bindFromRequest();
         if(filledForm.hasErrors()) {
             return badRequest(
-                    views.html.index.render(Task.all(), filledForm)
+                    index.render(Task.all(), filledForm)
             );
         } else {
             Task.create(filledForm.get());
@@ -42,14 +42,14 @@ public class Application extends Controller {
 
     public static Result login() {
         return ok(
-                views.html.login.render(form(Login.class))
+               login.render(form(Login.class))
         );
     }
 
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
-            return badRequest(views.html.login.render(loginForm));
+            return badRequest(login.render(loginForm));
         } else {
             session().clear();
             session("email", loginForm.get().email);

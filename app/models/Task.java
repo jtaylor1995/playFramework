@@ -2,7 +2,8 @@ package models;
 
 import java.util.*;
 
-import play.db.ebean.*;
+//import play.db.ebean.*;
+import com.avaje.ebean.Model;
 import play.data.validation.Constraints.*;
 
 import javax.persistence.*;
@@ -13,24 +14,28 @@ public class Task extends Model {
 
     @Id
     public Long id;
+    public String title;
+    public boolean done = false;
+    public Date dueDate;
+    @ManyToOne
+    public User assignedTo;
+    public String folder;
+    @ManyToOne
+    public Project project;
 
-    @Required
-    public String label;
+    public static Model.Finder<Long,Task> find = new Model.Finder(Task.class);
 
-    public static Finder<Long,Task> find = new Finder(
-            Long.class, Task.class
-    );
-
-    public static List<Task> all() {
-        return find.all();
+    public static List<Task> findTodoInvolving(String user) {
+        return find.fetch("project").where()
+                .eq("done", false)
+                .eq("project.members.email", user)
+                .findList();
     }
 
-    public static void create(Task task) {
+    public static Task create(Task task, Long project, String folder) {
+        task.project = Project.find.ref(project);
+        task.folder = folder;
         task.save();
+        return task;
     }
-
-    public static void delete(Long id) {
-        find.ref(id).delete();
-    }
-
 }
